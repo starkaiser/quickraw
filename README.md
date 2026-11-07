@@ -8,6 +8,8 @@ It runs on **GNU/Linux, Windows and macOS**. Previews are decoded in the
 background, and the two photos on either side of the current one are always
 ready, so stepping through a session is instant.
 
+![](/assets/gui.PNG)
+
 ## Download and run
 
 | System | Package | How to start |
