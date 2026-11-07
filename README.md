@@ -2,7 +2,7 @@
 
 A small (~5MB) and fast viewer for Canon RAW photos, written in modern Fortran.
 
-I wanted a simple program to review the RAW astrophotos I took before stacking them.
+I wanted a simple program to review the RAW astrophotos I took, before stacking them.
 I found [RAWviewer](https://github.com/markyip/RAWviewer), but it does not run on GNU/Linux and I could not build it successfully on my system, so I
 decided to write my own. QuickRAW allows you to review the photos, see details about them, delete the ones that are bad and quickly arrange them into the folders [Siril](https://siril.org/) expects for the stacking script: lights, darks, flats, biases.
 
@@ -12,11 +12,7 @@ It runs on **GNU/Linux, Windows and macOS**.
 
 ## Download and run
 
-| System | Package | How to start |
-|---|---|---|
-| Windows 10/11 x64 | `QuickRAW-<version>-windows-x64.exe` | double-click; one file, nothing to install |
-| Linux x86_64 | `QuickRAW-<version>-x86_64.AppImage` | `chmod +x` it, then double-click or run it |
-| macOS (Apple Silicon / Intel) | `QuickRAW-<version>-macos-<arch>.dmg` | open, drag QuickRAW to Applications |
+See the [Releases](https://github.com/starkaiser/quickraw/releases) page.
 
 Open photos by dropping a photo or a folder on the window, by pressing **O**,
 or from the command line:
