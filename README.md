@@ -33,12 +33,7 @@ a newer one.
 
 Two backends are available: threads and coarrays.
 
-| | `BACKEND=threads` (default) | `BACKEND=coarray` |
-|---|---|---|
-| decoders run as | OpenMP threads in one process | coarray images (OpenCoarrays) |
-| compiler | gfortran ≥ 12 | `caf` |
-| start | `./quickraw ...` | `cafrun -n 4 ./quickraw ...` |
-| used for | the release packages | development on Linux |
+OpenMP threads are used for building the release versions. Coarrays are used on GNU/Linux for development, experimentation and fun!
 
 raylib is compiled from `lib/raylib-6.0` with JPEG support switched on
 (raylib's default `config.h` leaves it off). fortran-raylib is compiled from
