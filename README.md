@@ -1,8 +1,11 @@
 # QuickRAW
 
-A small, fast viewer for Canon RAW photos (CR2 / CR3), written in modern Fortran
-with [raylib](https://www.raylib.com/). It is built for sorting an
-astrophotography session into the folders [Siril](https://siril.org/) expects.
+A small (~5MB) and fast viewer for Canon RAW photos (CR2 / CR3). I wanted a simple program to review the raw astrophotos I took before stacking them.
+I found [RAWviewer] (https://github.com/markyip/RAWviewer), but it does not run on GNU/Linux and I could not build it, so I
+decided to write my own. It also provides key bindings to quickly arramge the photos in the folders [Siril] (https://siril.org/) expects for the
+stacking script: lights, darks, flats, biases.
+
+It is written in modern Fortran with [raylib](https://www.raylib.com/) for GUI. 
 
 It runs on **GNU/Linux, Windows and macOS**. Previews are decoded in the
 background, and the two photos on either side of the current one are always
