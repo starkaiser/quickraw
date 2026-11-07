@@ -31,7 +31,7 @@ a newer one.
 
 ## Build from source
 
-Two worker backends share all the other code:
+Two backends are available: threads and coarrays.
 
 | | `BACKEND=threads` (default) | `BACKEND=coarray` |
 |---|---|---|
