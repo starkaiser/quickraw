@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=QuickRAW
+GenericName=RAW photo viewer
+Comment=Fast Canon RAW viewer and sorter for Siril (lights, darks, flats, biases)
+Exec=quickraw %f
+Icon=quickraw
+Terminal=false
+Categories=Graphics;Photography;Viewer;
+MimeType=image/x-canon-cr2;image/x-canon-cr3;
+Keywords=raw;cr2;cr3;canon;astrophotography;siril;
+StartupWMClass=QuickRAW
