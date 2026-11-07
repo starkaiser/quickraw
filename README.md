@@ -30,48 +30,6 @@ and choose **Open**. On macOS 15 you may instead need *System Settings → Priva
 & Security → Open Anyway*. The app needs the macOS version it was built on, or
 a newer one.
 
-## Keys
-
-| Key | Action |
-|---|---|
-| ← / → | previous / next photo (hold to scroll) |
-| Home / End | first / last photo |
-| O | open a photo (or drop one on the window) |
-| **L** | move to `lights/` |
-| **D** | move to `darks/` |
-| **F** | move to `flats/` |
-| **B** | move to `biases/` |
-| **Delete** (Mac: delete ⌫) | move to `delete_items/` |
-| Ctrl Z (Mac: Cmd Z) or U | undo the last move (up to 256 moves) |
-| Z, double-click | toggle fit / 100 % |
-| 0 / 1 | fit / 100 % |
-| + / − , mouse wheel | zoom (the wheel zooms at the cursor) |
-| drag | pan |
-| H | histogram |
-| Tab | hide / show the bars |
-| F11 | full screen |
-| ? or F1 | help |
-| Esc | close help, or quit |
-
-Keys are handled in the order you press them, even when the computer is busy.
-"L, then →" always files the photo that was on screen.
-
-The category buttons in the bottom bar can be clicked too, and each shows how
-many photos its folder already holds.
-
-Folders are created next to the photos the first time they are needed. Files
-are never overwritten: if a name already exists in the target folder, a suffix
-is added (`IMG_0001_1.CR2`). The resulting layout is what Siril's
-preprocessing scripts expect as their working directory:
-
-```
-session/
-  lights/  darks/  flats/  biases/  delete_items/
-```
-
-Once you zoom in, the zoom and position stay the same as you step through the
-photos, which makes it easy to compare the same stars across frames (tracking,
-focus, clouds). Press 0 or Z to go back to fit.
 
 ## Build from source
 
