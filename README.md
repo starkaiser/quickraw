@@ -69,4 +69,6 @@ installed raylib, which must have JPEG support), and `QUICKRAW_WORKERS=n`
 
 ## License
 
-QuickRAW is BSD 3-Clause licensed. Bundled components are listed in `THIRD_PARTY_LICENSES.md`.
+QuickRAW is BSD 3-Clause licensed. 
+
+Bundled components are licensed under their respective licenses, see `THIRD_PARTY_LICENSES.md` for details.
