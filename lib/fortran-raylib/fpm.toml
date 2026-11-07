@@ -1,0 +1,130 @@
+name = "fortran-raylib"
+version = "0.3.1"
+license = "ISC"
+author = "Philipp Engel"
+maintainer = "@interkosmos"
+copyright = "Copyright (c) 2023, Philipp Engel"
+description = "Fortran 2018 ISO C binding interfaces to raylib"
+keywords = [ "graphics", "raylib" ]
+
+[build]
+link = [ "raylib", "glfw", "GL", "pthread", "m" ]
+
+[library]
+source-dir = "src"
+
+[install]
+library = true
+
+[features]
+debug.flags = "-g -O0 -L/opt/lib -L/usr/local/lib"
+release.flags = "-O3 -L/opt/lib -L/usr/local/lib"
+
+[profiles]
+debug = ["debug"]
+release = ["release"]
+
+[[executable]]
+source-dir = "examples"
+name = "bunny"
+main = "bunny.f90"
+
+[[executable]]
+source-dir = "examples"
+name = "camera"
+main = "camera.f90"
+
+[[executable]]
+source-dir = "examples"
+name = "camera3d"
+main = "camera3d.f90"
+
+[[executable]]
+source-dir = "examples"
+name = "castle"
+main = "castle.f90"
+
+[[executable]]
+source-dir = "examples"
+name = "collision"
+main = "collision.f90"
+
+[[executable]]
+source-dir = "examples"
+name = "cubes"
+main = "cubes.f90"
+
+[[executable]]
+source-dir = "examples"
+name = "explosion"
+main = "explosion.f90"
+
+[[executable]]
+source-dir = "examples"
+name = "flags"
+main = "flags.f90"
+
+[[executable]]
+source-dir = "examples"
+name = "font"
+main = "font.f90"
+
+[[executable]]
+source-dir = "examples"
+name = "geometric"
+main = "geometric.f90"
+
+[[executable]]
+source-dir = "examples"
+name = "julia"
+main = "julia.f90"
+
+[[executable]]
+source-dir = "examples"
+name = "keys"
+main = "keys.f90"
+
+[[executable]]
+source-dir = "examples"
+name = "log"
+main = "log.f90"
+
+[[executable]]
+source-dir = "examples"
+name = "map"
+main = "map.f90"
+
+[[executable]]
+source-dir = "examples"
+name = "maze"
+main = "maze.f90"
+
+[[executable]]
+source-dir = "examples"
+name = "mesh"
+main = "mesh.f90"
+
+[[executable]]
+source-dir = "examples"
+name = "plane"
+main = "plane.f90"
+
+[[executable]]
+source-dir = "examples"
+name = "shapes"
+main = "shapes.f90"
+
+[[executable]]
+source-dir = "examples"
+name = "ship"
+main = "ship.f90"
+
+[[executable]]
+source-dir = "examples"
+name = "skybox"
+main = "skybox.f90"
+
+[[executable]]
+source-dir = "examples"
+name = "window"
+main = "window.f90"

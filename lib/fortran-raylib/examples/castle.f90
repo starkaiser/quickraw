@@ -1,0 +1,69 @@
+! Author:  Philipp Engel
+! Licence: ISC
+program main
+    !! Example program that renders a 3-D model loaded from file. Based on the
+    !! raylib example `models_loading.c`.
+    use :: raylib
+    use :: raylib_util
+    implicit none (type, external)
+
+    integer, parameter :: SCREEN_WIDTH  = 800
+    integer, parameter :: SCREEN_HEIGHT = 450
+
+    type(camera3d_type)  :: camera
+    type(model_type)     :: model
+    type(texture2d_type) :: texture
+    type(vector3_type)   :: position
+
+    call init_window(SCREEN_WIDTH, SCREEN_HEIGHT, f_c_str('Fortran + raylib'))
+    call set_target_fps(60)
+    call disable_cursor()
+
+    ! Define camera to look into our 3-D world.
+    camera%position   = vector3_type(50.0, 50.0, 50.0)
+    camera%target     = vector3_type(0.0, 10.0, 0.0)
+    camera%up         = vector3_type(0.0, 1.0, 0.0)
+    camera%fov_y      = 45.0
+    camera%projection = CAMERA_PERSPECTIVE
+
+    model   = load_model(f_c_str('share/castle.obj'))
+    texture = load_texture(f_c_str('share/castle_diffuse.png'))
+
+    call set_model_diffuse(model, texture)
+
+    do while (.not. window_should_close())
+        call update_camera(camera, CAMERA_FIRST_PERSON)
+
+        call begin_drawing()
+            call clear_background(RAYWHITE)
+
+            call begin_mode3d(camera)
+                call draw_model(model, position, 1.0, WHITE)
+                call draw_grid(20, 10.0)
+            call end_mode3d()
+
+            call draw_text(f_c_str('(c) Castle 3D model by Alberto Cano'), &
+                           SCREEN_WIDTH - 200, SCREEN_HEIGHT - 20, 10, GRAY)
+            call draw_fps(10, 10)
+        call end_drawing()
+    end do
+
+    call unload_texture(texture)
+    call unload_model(model)
+    call close_window()
+contains
+    subroutine set_model_diffuse(model, texture)
+        type(model_type),     intent(inout) :: model
+        type(texture2d_type), intent(inout) :: texture
+
+        type(material_type),     pointer :: material_ptrs(:)
+        type(material_map_type), pointer :: material_map_ptrs(:)
+
+        ! We have to add 1 to the array indices as a work-around, as we can't set
+        ! the lower bounds of the pointer arrays with `c_f_pointer()` yet
+        ! (new Fortran 2023 feature).
+        call c_f_pointer(model%materials, material_ptrs, [ model%material_count ])
+        call c_f_pointer(material_ptrs(1)%maps, material_map_ptrs, [ MAX_MATERIAL_MAPS + 1 ])
+        material_map_ptrs(MATERIAL_MAP_DIFFUSE + 1)%texture = texture
+    end subroutine set_model_diffuse
+end program main
