@@ -50,6 +50,7 @@ make -j4 BACKEND=coarray       # coarray backend (needs OpenCoarrays)
 ```
 
 **macOS** (Homebrew):
+
  `brew install gcc libraw pkg-config`, then `make -j4 CC=clang`.
 
 **Windows** ([MSYS2](https://www.msys2.org), *UCRT64* shell):
