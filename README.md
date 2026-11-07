@@ -47,7 +47,7 @@ raylib is compiled from `lib/raylib-6.0` with JPEG support switched on
 `lib/fortran-raylib`. Both are built into `build/`, separately for each OS. If
 `lib/` is missing them, `packaging/fetch-deps.sh` downloads the pinned versions.
 
-**Linux** (Debian / Ubuntu / Mint):
+**GNU/Linux** (Debian / Ubuntu / Mint):
 
 ```
 sudo apt install gfortran gcc make pkg-config libraw-dev \
@@ -71,5 +71,4 @@ installed raylib, which must have JPEG support), and `QUICKRAW_WORKERS=n`
 
 ## License
 
-QuickRAW is BSD 3-Clause licensed (`LICENSE`). Bundled components are listed in
-`THIRD_PARTY_LICENSES.md`.
+QuickRAW is BSD 3-Clause licensed. Bundled components are listed in `THIRD_PARTY_LICENSES.md`.
