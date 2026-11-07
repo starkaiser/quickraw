@@ -40,13 +40,6 @@ raylib is compiled from `lib/raylib-6.0` with JPEG support switched on
 `lib/fortran-raylib`. Both are built into `build/`, separately for each OS. If
 `lib/` is missing them, `packaging/fetch-deps.sh` downloads the pinned versions.
 
-**Windows** ([MSYS2](https://www.msys2.org), *UCRT64* shell):
-
-```
-pacman -S make git mingw-w64-ucrt-x86_64-{gcc,gcc-fortran,pkgconf,libraw,lcms2,libjpeg-turbo,zlib}
-make -j4
-```
-
 **GNU/Linux** (Debian / Ubuntu / Mint):
 
 ```
@@ -54,6 +47,13 @@ sudo apt install gfortran gcc make pkg-config libraw-dev \
      libx11-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libgl1-mesa-dev
 make -j4                       # thread backend
 make -j4 BACKEND=coarray       # coarray backend (needs OpenCoarrays)
+```
+
+**Windows** ([MSYS2](https://www.msys2.org), *UCRT64* shell):
+
+```
+pacman -S make git mingw-w64-ucrt-x86_64-{gcc,gcc-fortran,pkgconf,libraw,lcms2,libjpeg-turbo,zlib}
+make -j4
 ```
 
 **macOS** (Homebrew):
