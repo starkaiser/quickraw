@@ -1,2 +1,7 @@
+lib/**/*.cpp linguist-vendored
+lib/**/*.hpp linguist-vendored
+lib/**/*.h linguist-vendored
+lib/**/*.c linguist-vendored
+
 lib/** linguist-vendored=false
 lib/** linguist-documentation=false
