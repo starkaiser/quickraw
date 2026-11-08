@@ -1,2 +1,1 @@
-lib/fortran-raylib linguist-vendored
-lib/raylib-6.0 linguist-vendored
+lib/** linguist-vendored
