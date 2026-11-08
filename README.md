@@ -1,6 +1,8 @@
+<p align="center"><img src="https://github.com/starkaiser/quickraw/blob/main/packaging/icons/quickraw-256.png">
+
 # QuickRAW
 
-A small (~5MB) and fast viewer for Canon RAW photos, written in modern Fortran.
+A small (~5MB) and fast viewer for Canon RAW photos, written in modern parallel Fortran.
 
 I wanted a simple program to review the RAW astrophotos I took, before stacking them.
 I found [RAWviewer](https://github.com/markyip/RAWviewer), but it does not run on GNU/Linux and I could not build it successfully on my system, so I
