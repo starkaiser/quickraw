@@ -1,7 +1,2 @@
 lib/fortran-raylib linguist-vendored
 lib/raylib-6.0 linguist-vendored
-lib/**/*.h linguist-vendored
-lib/**/*.c linguist-vendored
-
-lib/** linguist-vendored=false
-lib/** linguist-documentation=false
