@@ -1,5 +1,5 @@
-lib/**/*.cpp linguist-vendored
-lib/**/*.hpp linguist-vendored
+lib/fortran-raylib linguist-vendored
+lib/raylib-6.0 linguist-vendored
 lib/**/*.h linguist-vendored
 lib/**/*.c linguist-vendored
 
