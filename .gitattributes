@@ -1,1 +1,2 @@
-lib/** linguist-vendore
+lib/** linguist-vendored=false
+lib/** linguist-documentation=false
