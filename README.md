@@ -10,7 +10,7 @@ decided to write my own. QuickRAW allows you to review the photos, see details a
 
 It runs on **GNU/Linux, Windows and macOS**.
 
-![](/assets/gui.PNG)
+![](/assets/gui_linux.png)
 
 ## Download and run
 
