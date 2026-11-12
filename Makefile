@@ -31,7 +31,7 @@
 # This file is part of QuickRAW - a small and fast program to view Canon RAW photos
 #
 # PURPOSE :
-#   Build QuickRAW on GNU/Linux, macOS and Windows (MSYS2 UCRT64 / MINGW64).
+#   Build QuickRAW on GNU/Linux, FreeBSD (with gmake), macOS and Windows (MSYS2 UCRT64 / MINGW64).
 #
 #     make                      thread backend (default; what the releases use)
 #     make BACKEND=coarray      coarray backend, built with caf, run with cafrun
@@ -54,11 +54,16 @@ VERSION_NUM := $(subst .,$(comma),$(VERSION)),0
 
 # ---- platform ------------------------------------------------------------------------------------
 
+UNAME_S ?= $(shell uname -s 2>/dev/null)
+
 ifeq ($(OS),Windows_NT)
     PLATFORM := windows
     EXE      := .exe
-else ifeq ($(shell uname -s),Darwin)
+else ifeq ($(UNAME_S),Darwin)
     PLATFORM := macos
+    EXE      :=
+else ifeq ($(UNAME_S),FreeBSD)
+    PLATFORM := freebsd
     EXE      :=
 else
     PLATFORM := linux
@@ -75,7 +80,15 @@ ifeq ($(filter $(BACKEND),threads coarray),)
     $(error BACKEND must be "threads" or "coarray")
 endif
 
-GFORTRAN ?= gfortran
+ifeq ($(origin GFORTRAN),undefined)
+    ifeq ($(PLATFORM),freebsd)
+        # FreeBSD's gcc packages install versioned names (gfortran14, gfortran13, ...).
+        GFORTRAN := $(firstword $(foreach f,gfortran gfortran16 gfortran15 gfortran14 gfortran13 \
+                        gfortran12,$(if $(shell command -v $(f) 2>/dev/null),$(f))) gfortran)
+    else
+        GFORTRAN := gfortran
+    endif
+endif
 CC       ?= cc
 CAF      ?= caf
 CAFRUN   ?= cafrun
@@ -131,19 +144,33 @@ ifeq ($(PLATFORM),windows)
 else ifeq ($(PLATFORM),macos)
     SYSTEM_LIBS := -framework OpenGL -framework Cocoa -framework IOKit -framework CoreAudio \
                    -framework CoreVideo -framework AudioToolbox
+else ifeq ($(PLATFORM),freebsd)
+    # As raylib's own FreeBSD build: GLFW loads the X11 libraries at run time.
+    SYSTEM_LIBS := -L/usr/local/lib -lGL -lpthread -lm
 else
     SYSTEM_LIBS := -lGL -lm -lpthread -ldl -lrt -lX11
 endif
 
 # ---- LibRaw --------------------------------------------------------------------------------------
 
-# LibRaw is C++: link its runtime explicitly (libc++ comes with the dylib on macOS).
-ifeq ($(PLATFORM),macos)
-    CXX_RUNTIME :=
-else
+# LibRaw is C++: link its runtime explicitly. On macOS and FreeBSD the shared
+# libraw already brings libc++, and adding GCC's libstdc++ would load a second one.
+ifeq ($(filter $(PLATFORM),macos freebsd),)
     CXX_RUNTIME := -lstdc++
+else
+    CXX_RUNTIME :=
+endif
+
+# FreeBSD: find GCC's own libgfortran / libgomp / libgcc_s at run time
+# (/usr/local/lib/gccNN), not the base system's libgcc_s.
+ifeq ($(PLATFORM),freebsd)
+    PLATFORM_LDFLAGS := -Wl,-rpath,$(dir $(shell $(GFORTRAN) -print-file-name=libgfortran.so 2>/dev/null))
+else
+    PLATFORM_LDFLAGS :=
 endif
 ifeq ($(RELEASE)-$(PLATFORM),1-windows)
+    # MSYS2's libraw.pc omits zlib, which LibRaw's DNG decoder needs (uncompress)
+    # when linking statically, so -lz is added after LibRaw's own libraries.
     LIBRAW_LIBS ?= $(shell $(PKG_CONFIG) --static --libs libraw 2>/dev/null || echo -lraw) -lz $(CXX_RUNTIME)
     RELEASE_LDFLAGS := -static -mwindows
 else
@@ -193,6 +220,7 @@ help:
 	@echo "  make RELEASE=1               release build (Windows: static exe, no console)"
 	@echo "  make RAYLIB=system           link a system-wide raylib (needs JPEG support)"
 	@echo "  make -j4                     parallel build"
+	@echo "  (FreeBSD: use gmake instead of make)"
 	@echo ""
 	@echo "Run:"
 	@echo "  ./quickraw [photo.CR2 | folder]"
@@ -291,7 +319,7 @@ $(BUILD_DIR)/quickraw.o:     $(BUILD_DIR)/m_app.o $(BUILD_DIR)/m_workers.o $(BUI
 $(BUILD_DIR)/m_config.o:     VERSION
 
 $(TARGET): $(OBJECTS) $(FRAYLIB_LIB) $(RAYLIB_LIB)
-	$(FC) $(BACKEND_FLAGS) $(LDFLAGS) $(RELEASE_LDFLAGS) -o $@ $(OBJECTS) "$(FRAYLIB_LIB)" \
+	$(FC) $(BACKEND_FLAGS) $(LDFLAGS) $(PLATFORM_LDFLAGS) $(RELEASE_LDFLAGS) -o $@ $(OBJECTS) "$(FRAYLIB_LIB)" \
 	    $(RAYLIB_LINK) $(LIBRAW_LIBS) $(SYSTEM_LIBS)
 
 run: $(TARGET)

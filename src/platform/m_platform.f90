@@ -50,7 +50,8 @@ module m_platform
 
     private
 
-    integer, parameter, public :: OS_LINUX = 1, OS_MACOS = 2, OS_WINDOWS = 3
+    !> OS_UNIX: GNU/Linux, FreeBSD and other X11 Unix systems (same code paths).
+    integer, parameter, public :: OS_UNIX = 1, OS_MACOS = 2, OS_WINDOWS = 3
 
     integer, parameter, public :: RENAME_OK      = 0
     integer, parameter, public :: RENAME_EXISTS  = 1

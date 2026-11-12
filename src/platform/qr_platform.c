@@ -37,7 +37,7 @@
  * PURPOSE :
  *   The only operating-system specific code in QuickRAW. Every function has a
  *   plain C signature (UTF-8 char*, int, void*) so the Fortran side binds to it
- *   with BIND(C) and stays identical on GNU/Linux, macOS and Windows.
+ *   with BIND(C) and stays identical on GNU/Linux, FreeBSD, macOS and Windows.
  *
  *   On Windows all paths are UTF-8 on the Fortran side and converted to UTF-16
  *   here, so folders with non-ASCII names work. LibRaw's char* API uses the
@@ -92,7 +92,7 @@ extern int libraw_open_buffer(void *lr, const void *buffer, size_t size);
 
 /* -------------------------------------------------------------------------------------------- */
 
-/** 1 = GNU/Linux (and other Unix), 2 = macOS, 3 = Windows */
+/** 1 = GNU/Linux, FreeBSD and other X11 Unix systems, 2 = macOS, 3 = Windows */
 int qr_platform(void)
 {
 #if defined(_WIN32)
@@ -242,13 +242,23 @@ int qr_rename_noreplace(const char *from, const char *to)
 #  elif defined(__APPLE__)
         rc = renamex_np(from, to, RENAME_EXCL);
 #  else
-        errno = ENOSYS;
+        /* FreeBSD and other Unix systems have no rename-without-replace call,
+           but link() fails with EEXIST when 'to' exists, so link + unlink
+           moves the file atomically without ever overwriting. */
+        if (link(from, to) == 0) {
+            if (unlink(from) == 0) return QR_RENAME_OK;
+            unlink(to);                         /* keep the original name */
+            return QR_RENAME_FAILED;
+        }
+        /* EEXIST is handled below; any other failure usually means a
+           filesystem without hard links (msdosfs / exFAT SD cards, FUSE). */
+        if (errno != EEXIST) errno = ENOTSUP;
 #  endif
         if (rc == 0) return QR_RENAME_OK;
         if (errno == EEXIST) return QR_RENAME_EXISTS;
         if (errno != EINVAL && errno != ENOSYS && errno != ENOTSUP) return QR_RENAME_FAILED;
-        /* Filesystem without atomic no-replace support (FUSE, network, exFAT on
-           some kernels): the target was free a moment ago, fall back to rename(). */
+        /* Filesystem without atomic no-replace support (FUSE, network, exFAT,
+           msdosfs): the target was free a moment ago, fall back to rename(). */
         if (qr_exists(to)) return QR_RENAME_EXISTS;
         return rename(from, to) == 0 ? QR_RENAME_OK : QR_RENAME_FAILED;
     }

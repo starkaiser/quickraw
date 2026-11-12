@@ -64,7 +64,7 @@ module m_app
     use :: m_jobs, only: JOB_NO_JPEG, JOB_DECODE, JOB_TOO_LARGE
     use :: m_workers, only: worker_count
     use :: m_strings
-    use :: m_platform, only: os, OS_LINUX, OS_MACOS, path_exists, open_file_dialog, qr_asset, &
+    use :: m_platform, only: os, OS_UNIX, OS_MACOS, path_exists, open_file_dialog, qr_asset, &
                              string_from_c_ptr
     use :: m_config, only: APP_NAME, APP_VERSION, APP_BACKEND
     use :: m_log, only: log_message, log_failure
@@ -145,7 +145,7 @@ contains
 
         flags = ior(ior(FLAG_WINDOW_RESIZABLE, FLAG_VSYNC_HINT), FLAG_MSAA_4X_HINT)
         ! Retina / 150-200% displays: draw in logical pixels, render at full resolution.
-        if (os() /= OS_LINUX) flags = ior(flags, FLAG_WINDOW_HIGHDPI)
+        if (os() /= OS_UNIX) flags = ior(flags, FLAG_WINDOW_HIGHDPI)
         call set_config_flags(flags)
         call init_window(1400_c_int, 900_c_int, f_c_str(APP_NAME))
         call set_window_min_size(960_c_int, 560_c_int)
