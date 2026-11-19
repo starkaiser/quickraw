@@ -1,1 +1,2 @@
 lib/** linguist-vendored
+src/platform/*.c linguist-vendored
