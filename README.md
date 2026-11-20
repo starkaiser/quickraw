@@ -1,4 +1,5 @@
 <p align="center"><img src="packaging/icons/quickraw.svg" alt="quickraw" width="128"></p>
+
 # QuickRAW
 
 A small (~5MB) and fast viewer for Canon RAW photos, written in modern parallel Fortran.
