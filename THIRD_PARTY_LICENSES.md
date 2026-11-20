@@ -1,7 +1,7 @@
 # Third-party components
 
 The release packages contain these components. Their licenses travel with the
-release; this list is a summary, not legal advice.
+release.
 
 | Component | Used for | License |
 |---|---|---|
