@@ -44,10 +44,17 @@ raylib is compiled from `lib/raylib-6.0` with JPEG support switched on
 
 ### GNU/Linux (Debian / Ubuntu / Mint):
 
+**Install dependencies**
 ```
 sudo apt install gfortran gcc make pkg-config libraw-dev \
      libx11-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libgl1-mesa-dev
-make -j4                       # thread backend
+```
+
+**Build**
+```
+git clone https://github.com/starkaiser/quickraw.git
+cd quickraw
+make -j4                       # thread backend, or
 make -j4 BACKEND=coarray       # coarray backend (needs OpenCoarrays)
 ```
 
@@ -73,7 +80,7 @@ The Open dialog uses zenity or kdialog, as on Linux.
 
 ### Windows:
 
-([MSYS2](https://www.msys2.org), *UCRT64* shell)
+Use [MSYS2](https://www.msys2.org) and in a *UCRT64* shell:
 
 ```
 pacman -S make git mingw-w64-ucrt-x86_64-{gcc,gcc-fortran,pkgconf,libraw,lcms2,libjpeg-turbo,zlib}
@@ -82,7 +89,10 @@ make -j4
 
 ### macOS (Homebrew):
 
- `brew install gcc libraw pkg-config`, then `make -j4 CC=clang`.
+ ```
+ brew install gcc libraw pkg-config
+ make -j4 CC=clang
+ ```
 
 Other options: `make help`, `make RELEASE=1`, `make RAYLIB=system` (link an
 installed raylib, which must have JPEG support), and `QUICKRAW_WORKERS=n`
