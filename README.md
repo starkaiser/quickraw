@@ -88,6 +88,8 @@ pacman -S make git mingw-w64-ucrt-x86_64-{gcc,gcc-fortran,pkgconf,libraw,lcms2,l
 
 **Build**
 ```
+git clone https://github.com/starkaiser/quickraw.git
+cd quickraw
 make -j4
 ```
 
@@ -98,10 +100,12 @@ make -j4
  brew install gcc libraw pkg-config
  ```
  
- **Build**
- ```
- make -j4 CC=clang
- ```
+**Build**
+```
+git clone https://github.com/starkaiser/quickraw.git
+cd quickraw
+make -j4 CC=clang
+```
 
 Other options: `make help`, `make RELEASE=1`, `make RAYLIB=system` (link an
 installed raylib, which must have JPEG support), and `QUICKRAW_WORKERS=n`
