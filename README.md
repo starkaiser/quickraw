@@ -42,7 +42,7 @@ raylib is compiled from `lib/raylib-6.0` with JPEG support switched on
 `lib/fortran-raylib`. Both are built into `build/`, separately for each OS. If
 `lib/` is missing them, `packaging/fetch-deps.sh` downloads the pinned versions.
 
-**GNU/Linux** (Debian / Ubuntu / Mint):
+### GNU/Linux (Debian / Ubuntu / Mint):
 
 ```
 sudo apt install gfortran gcc make pkg-config libraw-dev \
@@ -51,7 +51,9 @@ make -j4                       # thread backend
 make -j4 BACKEND=coarray       # coarray backend (needs OpenCoarrays)
 ```
 
-**FreeBSD** (use `gmake`, GNU make; the system `make` only prints a reminder):
+### FreeBSD:
+
+Use `gmake`, GNU make; the system `make` only prints a reminder
 
 ```
 pkg install gmake gcc pkgconf libraw git bash \
@@ -69,14 +71,16 @@ rename-without-replace call, so QuickRAW moves files with `link` + `unlink`.
 On filesystems without hard links (FAT/exFAT cards) it checks first and then renames.
 The Open dialog uses zenity or kdialog, as on Linux.
 
-**Windows** ([MSYS2](https://www.msys2.org), *UCRT64* shell):
+### Windows:
+
+([MSYS2](https://www.msys2.org), *UCRT64* shell)
 
 ```
 pacman -S make git mingw-w64-ucrt-x86_64-{gcc,gcc-fortran,pkgconf,libraw,lcms2,libjpeg-turbo,zlib}
 make -j4
 ```
 
-**macOS** (Homebrew):
+### macOS (Homebrew):
 
  `brew install gcc libraw pkg-config`, then `make -j4 CC=clang`.
 
