@@ -60,37 +60,46 @@ make -j4 BACKEND=coarray       # coarray backend (needs OpenCoarrays)
 
 ### FreeBSD:
 
-Use `gmake`, GNU make; the system `make` only prints a reminder
+Use `gmake`, GNU make; the system `make` only prints a reminder.
+The Makefile finds the versioned compiler that FreeBSD's `gcc` package installs
+(`gfortran14`, `gfortran13`, ...). Set `GFORTRAN=` to choose another one.
 
+**Install dependencies**
 ```
 pkg install gmake gcc pkgconf libraw git bash \
     libX11 libXrandr libXinerama libXcursor libXi mesa-libs
-gmake -j4
-./quickraw /path/to/session
 ```
 
-The Makefile finds the versioned compiler that FreeBSD's `gcc` package installs
-(`gfortran14`, `gfortran13`, ...). Set `GFORTRAN=` to choose another one. The
-program gets an rpath to GCC's runtime libraries in `/usr/local/lib/gccNN`. raylib
-is built with the system `clang`, as raylib itself does on FreeBSD. Sorting into
-folders never overwrites files there either. FreeBSD has no
-rename-without-replace call, so QuickRAW moves files with `link` + `unlink`.
-On filesystems without hard links (FAT/exFAT cards) it checks first and then renames.
-The Open dialog uses zenity or kdialog, as on Linux.
+**Build**
+```
+git clone https://github.com/starkaiser/quickraw.git
+cd quickraw
+gmake -j4
+```
 
 ### Windows:
 
 Use [MSYS2](https://www.msys2.org) and in a *UCRT64* shell:
 
+**Install dependencies**
 ```
 pacman -S make git mingw-w64-ucrt-x86_64-{gcc,gcc-fortran,pkgconf,libraw,lcms2,libjpeg-turbo,zlib}
+```
+
+**Build**
+```
 make -j4
 ```
 
 ### macOS (Homebrew):
 
+**Install dependencies**
  ```
  brew install gcc libraw pkg-config
+ ```
+ 
+ **Build**
+ ```
  make -j4 CC=clang
  ```
 
